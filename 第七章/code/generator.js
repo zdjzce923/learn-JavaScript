@@ -168,3 +168,8 @@ function* generatorFn6() {
     } catch (e) {}
   }
 }
+const g6 = generatorFn6();
+console.log(g6.next()); // { done: false, value: 1} g.throw('foo');
+console.log(g6.next()); // { done: false, value: 3}
+
+// 在这个例子中，生成器在 try/catch 块中的 yield 关键字处暂停执行。在暂停期间，throw()方 法向生成器对象内部注入了一个错误:字符串"foo"。这个错误会被 yield 关键字抛出。因为错误是在 生成器的try/catch块中抛出的，所以仍然在生成器内部被捕获。可是，由于yield抛出了那个错误， 生成器就不会再产出值2。此时，生成器函数继续执行，在下一次迭代再次遇到yield关键字时产出了 值3。
