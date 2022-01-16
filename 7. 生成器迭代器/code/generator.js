@@ -151,8 +151,9 @@ function* generatorFn5() {
     yield x;
   }
 }
+
 const g5 = generatorFn5();
-console.log(g5); // generatorFn {<suspended>}
+console.log(g5); // generatorFn {<suspended>} // TODO sssss
 try {
   g5.throw("foo");
 } catch (e) {
