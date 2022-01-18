@@ -104,8 +104,66 @@ objD = {
 objE = {
 	set a( value ) {
 		console.log('value:', value) // value: foo
-	}
+	} 
 }
 
 console.log( Object.assign( objE, objD) ) // { a: [Setter] }
 // 这里将 objD 源对象的属性浅拷贝到 objE 上，在浅拷贝时通过 get 获取到的键值为 a: foo，随后再调用 set 函数，由于 set 函数并没有设置值，所以并不会将新属性合并进去。
+// Object.assign() 实际上浅复制，如果源对象中有多个属性与目标对象相同，将会取最后一次的值。从源对象访问器取到的属性值如果是函数，会作为一个静态值赋给目标对象。
+
+// 2.4 对象标识及相等判定
+// 在ECMAScript 6 之前，有些特殊情况即使是===操作符也无能为力：这些情况在不同JavaScript 引擎中表现不同，但仍被认为相等
+console.log(NaN === NaN); // false 
+console.log(+0 === -0);   // true 
+console.log(+0 === 0);    // true 
+console.log(-0 === 0);    // true
+
+// ECMAScript  6 规范新增了 Object.is()，这个方法与===很像，这个方法必须接收两个参数：
+// 正确的NaN 相等判定 
+console.log(Object.is(NaN, NaN)); // true 
+
+// 正确的0、-0、+0 相等/不等判定 
+console.log(Object.is(+0, -0));   // false 
+console.log(Object.is(+0, 0));    // true 
+console.log(Object.is(-0, 0));    // false
+
+// 2.5 增强的对象写法
+// ES6新增了许多语法糖，这些语法糖并没有改变引擎的行为，但是极大地提高了可书写性
+// 当对象内属性与某变量名同名时
+const name = 'zengdejin'
+const obj6 = { name }
+console.log(obj6.name) // zengdejin
+
+// 代码压缩程序会在不同作用域保留属性名，以防找不到引用
+function getObjName(name) {
+	return {
+		name
+	}
+}
+console.log(getObjName( 'zzzz' ))
+const person = getObjName( 'zengDeJin' )
+console.log( person ) // { name: 'zengDeJin' }
+
+// 在这里，即使参数标识符不在限定的函数作用域，编译器也会保留初始的标识符。如果使用 Google Closure 编译器压缩，那么函数参数会被缩短，而属性名不变： 
+// function makePerson(a) {  
+// 	return { 
+// 	  name: a
+// 	} 
+// } 
+   
+// var person = makePerson("Matt")
+   
+// console.log(person.name) // Matt
+
+// 2.5.2 可计算属性
+// 在引入可计算属性之前，如果想使用变量的值作为属性，那么必须先声明对象，然后使用中括号语法来添加属性。
+const nameKey = 'name'
+const ageKey = 'age'
+const jobKey = 'job'
+ 
+let person3 = {}
+person3[nameKey] = 'Matt'
+person3[ageKey] = 27
+person3[jobKey] = 'Software engineer'
+ 
+console.log(person3) // { name: 'Matt', age: 27, job: 'Software engineer' }
