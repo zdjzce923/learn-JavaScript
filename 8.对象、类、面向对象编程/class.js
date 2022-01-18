@@ -74,6 +74,38 @@ Object.defineProperties( book2, {
 })
 console.log(book2) // {year_: 2017, edition: 1}
 // 与 property 唯一的区别是所有属性都是同时定义的，并且数据属性的configurable、enumerable 和writable 特性值都是false。
-book2.year = 2021 
-console.log(book2.year)
+book2.year = 2021
+console.log(book.year)
 
+// 2.2 读取属性的特性 getOwnPropertyDescriptor()
+// 获取指定属性的属性描述符，该函数接收两个参数，要获取的对象，获取的属性。
+const book2Descriptor = Object.getOwnPropertyDescriptor( book2, 'year_' )
+console.log( book2Descriptor )
+console.log( book2Descriptor.value) // 2017
+console.log( book2Descriptor.configurable ) // false
+
+// ES2017 新增的方法 getOwnPropertyDescriptors() 这个方法会将对象中的每个属性都调用一次 getOwnPropertyDescriptors() 并在一个新对象中返回他们
+const book2Descriptors = Object.getOwnPropertyDescriptors(book2)
+console.log('book2Descriptors:', book2Descriptors) // {year_: {…}, edition: {…}, year: {…}}
+
+// 2.3 Object.assign() 这个方法接收一个目标对象和一个或多个源对象作为参数。在合并时，将每个对象的可枚举（即（Object.propertyIsEnumerable()返回true）
+// 和自有（Object.hasOwnProperty()返回 true））属性复制到目标对象。对每个符合条件的属性，会先使用源对象的 [[get]] 取得对象的值，再使用 [[set]] 设置目标对象的属性值。
+let objA={}, objB = { name: '1', age: 15}, objC = { hoby: '1123123', num: 1111}
+const obj4 = Object.assign(objA, objB, objC)
+console.log('Obj4:', obj4) // {name: '1', age: 15, hoby: '1123123', num: 1111}
+
+let objD, objE
+objD = {
+	get a() {
+		console.log('i am objD, 源对象的 getter')
+		return 'foo'
+	}
+}
+objE = {
+	set a( value ) {
+		console.log('value:', value) // value: foo
+	}
+}
+
+console.log( Object.assign( objE, objD) ) // { a: [Setter] }
+// 这里将 objD 源对象的属性浅拷贝到 objE 上，在浅拷贝时通过 get 获取到的键值为 a: foo，随后再调用 set 函数，由于 set 函数并没有设置值，所以并不会将新属性合并进去。
