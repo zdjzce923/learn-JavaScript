@@ -167,3 +167,96 @@ person3[ageKey] = 27
 person3[jobKey] = 'Software engineer'
  
 console.log(person3) // { name: 'Matt', age: 27, job: 'Software engineer' }
+// 因为被当做复杂表达式求值，所以计算属性本身也可以是复杂的表达式：
+
+let uniqueToken = 0
+function getObjectKey( key ) {
+	return `${ key }_${ uniqueToken++ }`
+}
+let person4 = {
+	[getObjectKey( nameKey )]: 'Matt',
+	[getObjectKey( ageKey )]: 27,
+	[getObjectKey( jobKey )]: 'Soft',
+}
+console.log( person4 ) // {name_0: 'Matt', age_1: 27, job_2: 'Soft'}
+
+// 简写方法名与可计算属性键相互兼容： 
+const methodKey = 'sayName';
+ 
+let person5 = { 
+  [methodKey](name) { 
+    console.log(`My name is ${name}`); 
+  } 
+} 
+
+person5.sayName('Matt'); // My name is Matt
+
+// 2.6 对象解构
+const person6 = { 
+	name2: 'zdj',
+	age2: 22,
+}
+const { name2: personName, age2: PersonAge } = person6
+console.log('PersonAge:', PersonAge) // PersonAge: 22
+console.log('personName:', personName) // PersonName: zdj
+
+// 解构赋值不一定能够完全匹配对象的属性，若是属性不存在将会返回 undefined
+
+let { name2, age2, job3 } = person6
+console.log('job:', job3) // undefined
+console.log(name2) // zdj
+
+// 给属性默认值，如果源对象存在则返回源对象属性，不存在值即为默认值
+let { job2 = 'zzzzzzz' } = person6
+console.log(job2)
+
+// 解析在内部使用 ToObject() 将源数据结构转换为对象。如果是原始值，也将被转换为对象，如果是 null 或者 undefined 将不能被解构
+const { length } = 'I am String'
+console.log('length:', length) // length: 11
+const { constructor: c } = 1010
+console.log('c:', c === Number) // true
+
+// 解构并不要求先声明。如果是先声明的对象应放在 () 里
+let name4, age4 
+( { name2: name4, age2: age4 } = person6 )
+console.log('name4, age4:', name4, age4) // zdj 22
+
+// 嵌套解构，解构对于引用嵌套的属性和赋值并没有限制，所以可以使用解构赋值来复制对象属性
+let person7 = {  
+	name: 'Matt', 
+	age: 27, 
+	job: { 
+	  title: 'Software engineer' 
+	} 
+}
+let personCopy = {};
+   
+({ 
+	name: personCopy.name, 
+	age: personCopy.age, 
+	job: personCopy.job 
+ } = person7)
+
+console.log( personCopy ) // {name: 'Matt', age: 27, job: { title: 'Software engineer' }}
+
+const abc = { name: { a: 123}}
+const b33 = { asd: abc.name }
+console.log(b33);
+abc.name = { b: 45}
+
+console.log(b33)
+
+// 解构赋值也可以用在函数参数中，对参数的解构赋值不会影响到 arguments ，并且可以直接声明在函数体内的局部变量。
+const person8 = {
+	name: 'zdjzdjzdj',
+	age: 4545
+}
+function getPersonInfo( foo, { name, age }, bar ) {
+	console.log(arguments)
+	console.log( 'name, age:', name, age )
+}
+getPersonInfo( 'hello i am ', person8, 'bar') // { [Iterator] 0: 'hello i am ',1: { name: 'zdjzdjzdj', age: 4545 },2: 'bar' } , name,age: zdjzdjzdj 4545
+
+
+// 2.7 创建对象
+// ECMAScript6 开始正式支持类和继承。ES6 的类旨在完全涵盖之前规范设计的基于原型的继承模式。
