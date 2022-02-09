@@ -260,3 +260,39 @@ getPersonInfo( 'hello i am ', person8, 'bar') // { [Iterator] 0: 'hello i am ',1
 
 // 2.7 创建对象
 // ECMAScript6 开始正式支持类和继承。ES6 的类旨在完全涵盖之前规范设计的基于原型的继承模式。
+// 创建构造函数的新实例后，内部会执行以下操作：
+// 新建一个空对象，将这个新对象内部的 [[prototype]] 指向构造函数的 prototype，构造函数内部的 this 被复制给新对象（即 this 指向新对象）。执行构造函数内部的代码(给新对象添加属性)，如果构造函数返回非空对象，那么则返回该对象，否则则返回刚创建的新对象
+function Person9( name, age ) {
+	this.name = name
+	this.age = age
+	this.sayName = function() {
+		console.log( 'name:', this.name )
+	}
+}
+
+const personInfo = new Person9( 'zdj', 23 )
+const personInfo2 = new Person9( 'zce', 26)
+personInfo.sayName()
+// 创建的 personInfo 与 personInfo2 保存着不同的实例，但指向同一个 constructor ，即 Person9
+console.log( personInfo.constructor  === personInfo2.constructor ) // true
+// personInfo 与 personInfo2 是 Object 的实例同时也是 Person9 的实例：
+console.log('personInfo:', personInfo instanceof Object) // true
+console.log('personInfo2:', personInfo2 instanceof Person9) // true
+
+// 构造函数也是函数，任何函数只要 new 了以后就是构造函数。不使用 new 操作符调用的函数就是普通函数。比如之前的 Person9 函数
+// 作为普通函数调用
+Person9( 'zdj', 22 ) // 添加到 window 对象
+window.sayName() // name: zdj
+
+// 在另一个对象的作用域中调用：
+const o = new Object()
+Person9.call( o, 'zcecece', 24)
+o.sayName()
+
+/* 普通函数的调用方式，这时候没有使用 new 操作符调用Person()，结果会将属性和方法添加到 window 对
+象。在调用一个函数而没有明确设置 this 值的情况下（即没有作为对象的方法调用，或
+者没有使用call()/apply()调用），this 始终指向Global 对象（在浏览器中就是window 对象）。
+因此在上面的调用之后，window 对象上就有了一个 sayName()方法，调用它会返回"Greg"。最后展
+示的调用方式是通过call()（或apply()）调用函数，同时将特定对象指定为作用域。这里的调用将
+对象o 指定为Person()内部的this 值，因此执行完函数代码后，所有属性和sayName()方法都会添
+加到对象o 上面。 */
