@@ -66,3 +66,56 @@ function protoHasAttribute( object, attr ) {
 	return !object.hasOwnProperty( attr ) && (attr in object)
 }
 console.log('protoHasAttribute( person3,name ):', protoHasAttribute( person3, 'name' )) // false
+
+// 列出所有实例属性，无论是否可以枚举
+const keys = Object.getOwnPropertyNames( Person.prototype )
+console.log( keys ) // ['constructor', 'name', 'sayName']
+
+// 定义构造函数的属性和方法时可以直接使用对象字面量的方法，但这种方法会将原型对象上的 constructor 覆盖。
+
+function Person6() {}
+Person6.prototype = { 
+	name: 'Nnnn',
+	age: 24,
+	sayName() {
+		console.log( this.name )
+	}
+}
+Person6.prototype.constructor = Person6 // 改变 Person6 的 constructor
+console.log(Person6.prototype)
+
+// 使用 Object.defineProperty 修改 constructor 属性为 Person6，并将 enumerable 修改为 False
+Object.defineProperty( Person6.prototype, 'constructor', {
+	enumerable: false,
+	value: Person6
+} )
+
+// 创建实例后，修改构造函数的属性或方法后也会在实例上反映出来。因为实例并不是拷贝了原型对象的副本，实例与原型间的关系就是简单的指针。
+const person7 = new Person6()
+Person6.prototype.sayHi = () => { console.log('zdjzdjzdjzdj') }
+// person7 调用 sayHi 方法首先会从自身找，自身没有又会去原型对象找
+person7.sayHi()
+
+// 虽然随时添加属性和方法会反映到实例上，但跟重写原型是两回事，实例的指针[[prototype]]是在调用构造函数时自动赋值的,这个指针即使把原型修改为不同的对象也不会改变。如果重写了原型对象会切断与实例间的联系，但实例引用的仍然是最初的原型。实例只有指向原型对象的指针，没有指向构造函数的指针。
+function Person8(){}
+const person9 = new Person8()
+Person8.prototype = {
+	sayHi(){ console.log(' hi ') }
+}
+// 此时 person9 指向的原型还是最初的原型
+// person9.sayHi() // person9.sayHi is not a function
+
+// 原型的不足
+// 原型弱化了向构造函数传递初始化参数的能力，这还不是最大的问题，原型最大的问题源自于它的共享特性。我们知道可以在实例添加同名属性遮蔽原来的原型属性。但如果是引用类型则会出问题：
+function Person9() {}
+Person9.prototype = {
+	constructor: Person9,
+	arr: ['1','2','3']
+}
+const person10 = new Person9()
+const person11 = new Person9()
+person10.arr.push('4')
+console.log(person10.arr) // ['1', '2', '3', '4']
+console.log(person11.arr) // ['1', '2', '3', '4']
+// person10 通过 push 方法向 arr 数组中添加了一个字符串，由于 person10 本身并没有这个属性，所以会直接修改 Person9.prototype.arr。新加的这个字符串也会在 person11 上反映出来。一般不同的实例应该有自己的属性副本。
+
