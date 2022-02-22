@@ -8,7 +8,6 @@
 </head>
 <body>
 	<script>
-		// 1 => 2 => 3 => 4
 		class Node {
 			constructor(val) {
 				this.val = val
@@ -21,14 +20,38 @@
 			}
 			append(val) {
 				const node = new Node(val)
-				if(this.head) { // 如果没有节点
-					
+				let p = this.head
+				if(this.head) {
+					while(p.next) {
+						p = p.next
+					}
+					p.next = node
 				} else {
 					this.head = node
 				}
 			}
+			print() {
+				let p = this.head
+				let ret = ''
+				if(this.head) {
+					do {
+						ret += (p.val + '=>')
+						p = p.next
+					} while(p.next)
+					ret += p.val
+					console.log(ret)
+				} else {
+					console.log('empty')
+				}
+			}
 		}
-		const nodeList = new NodeList()
+
+		const list = new NodeList()
+		list.append(1)
+		list.append(2)
+		list.append(3)
+		list.append(4)
+		list.print()
 	</script>
 </body>
 </html>
