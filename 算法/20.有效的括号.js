@@ -11,7 +11,7 @@
  */
 // "(){}[]" true 
 // {[()]} true
-// (([]))  false
+// ((([]))  false
 // ({)}  false
 var isValid = function(s) {
 	const map = {
@@ -19,7 +19,8 @@ var isValid = function(s) {
 		'[': ']',
 		'(': ')'
 	}
-	// 使用栈，后入先出每次push一个跟左边的对比，左边的括号必须跟右边的括号相等，否则不合法。
+	// 使用栈，将匹配的左括号全部入栈，右括号不入栈，弹出栈的最后一个元素与右括号进行对比，相等则合法。
+	// 若入栈的元素都找到对应的反括号，那么最后的栈应该为空。
 	let stack = []
 	for(let i = 0; i < s.length; i++) {
 		const ele = s[i]
