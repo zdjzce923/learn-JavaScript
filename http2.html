@@ -8,17 +8,28 @@
     <style></style>
   </head>
   <body>
-    <script src="https://47.93.220.107/static/lib/DemoH5.js"></script>
-    <script src="https://47.93.220.107/static/lib/static/vant-touch-emulator.js"></script>
     <div></div>
     <script>
-      const div = document.querySelector('div')
-      console.log(div)
-      for(let i = 1; i < 36; i++) {
-        const image = document.createElement('img')
-        image.setAttribute('src', `https://47.93.220.107/static2/${i}.png`)
-        div.appendChild(image)
-      }
+      
+
+	var wordPattern = function(pattern, s) {
+		const word2ch = new Map();
+		const ch2word = new Map();
+		const words = s.split(' ');
+		if (pattern.length !== words.length) {
+			return false;
+		}
+		for (const [i, word] of words.entries()) {
+			const ch = pattern[i];
+			if (word2ch.has(word) && word2ch.get(word) != ch || ch2word.has(ch) && ch2word.get(ch) !== word) {
+				return false;
+			}
+			word2ch.set(word, ch);
+			ch2word.set(ch, word);
+		}
+    	return true;
+	};
+    	console.log(wordPattern('abba','dog dog dog dog'))
     </script>
   </body>
 </html>
