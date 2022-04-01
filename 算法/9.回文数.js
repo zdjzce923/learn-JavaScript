@@ -12,13 +12,28 @@
 const isPalindrome = function(x) {
 	const forwardList = String(x).split('')
 	const reverse = String(x).split('').reverse()
-	const result = []
-	forwardList.forEach((item, index) => {
-		reverse[index] === item ? result.push(true) : result.push(false)
-	})
-
-	return result.every( item => item === true)
+	return forwardList.every( (item,index) => item === reverse[index])
 	
 }
+
+// 121
+/**
+ * result 1 num 12
+ * result 12 num 1
+ * 
+*/
+
+/* var isPalindrome = function(x) {
+	if (x < 0) {
+		return false
+	}
+	let num = x
+	let result = 0
+	while (num > 0) {
+		result = result * 10 + num % 10
+		num = Math.floor(num / 10)
+	}
+	return result === x
+} */
 // @lc code=end
 
