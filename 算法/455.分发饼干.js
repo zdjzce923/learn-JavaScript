@@ -13,8 +13,20 @@
  * [1,2] [1,2,3]
  */
 
-const findContentChildren = function(g, s) {
-
+const findContentChildren = function (g, s) {
+	g.sort((a, b) => a - b)
+	s.sort((a, b) => a - b)
+	let gLength = g.length, sLength = s.length
+	let count = 0
+	for (let i = 0, j = 0; i < gLength && j < sLength; i++, j++) {
+		while (j < sLength && g[i] > s[j]) {
+			j++
+		}
+		if( j < sLength) {
+			count++
+		}
+	}
+	return count
 };
 // @lc code=end
 

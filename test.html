@@ -9,7 +9,7 @@
   </head>
   <body>
     <script>
-      const array = [435,687,1,57,9,325,79,4543,523,544,1234,5832,1235,743]
+      /* const array = [435,687,1,57,9,325,79,4543,523,544,1234,5832,1235,743]
       function quickSort(array) {
         if(array.length <= 1) {
           return array
@@ -27,7 +27,27 @@
         }
         return quickSort(left).concat([pivot], quickSort(right))
       }
-      console.log(quickSort(array))
+      console.log(quickSort(array)) */
+	  const coinChange = (coins, amount) => {
+		if (!amount) {
+			return 0
+		}
+
+		let dp = Array(amount + 1).fill(Infinity)
+		dp[0] = 0
+
+		for (let i = 0; i < coins.length; i++) {
+			console.log('coins_now-----:', i)
+			for (let j = coins[i]; j <= amount; j++) {
+				console.log('dp[j - coins[i]]-----:', dp[j - coins[i]])
+				dp[j] = Math.min(dp[j - coins[i]] + 1, dp[j])
+				console.log('dp[j]:', dp[j])
+			}
+		}
+
+		return dp[amount] === Infinity ? -1 : dp[amount]
+	}
+	coinChange([1,2,5],11)
     </script>
   </body>
 </html>
