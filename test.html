@@ -48,21 +48,6 @@
 		return dp[amount] === Infinity ? -1 : dp[amount]
 	}
 	coinChange([1,2,5],11) */
-	var longestCommonPrefix = function (strs) {
-		if(strs.length === 0) {
-			return ''
-		}
-		let str = strs[0]
-		for(let i = 1; i < strs.length; i++) {
-			for(let j = 0; j < strs[i].length; j++) {
-				if(str[j] !== strs[i][j]) {
-					str = str.slice(0, j)
-				}
-			}
-		}
-	};
-
-	longestCommonPrefix(["flower","flow","flight"])
     </script>
   </body>
 </html>

@@ -33,40 +33,34 @@
 }; */
 
 var longestCommonPrefix = function (strs) {
-	if (strs == null || !strs.length) return "";
-	// 字符串数组中最短字符串的长度
-	let minLength = Number.MAX_SAFE_INTEGER;
+	if (strs.length === 0) {
+		return ''
+	}
+	let minLength = Number.MAX_SAFE_INTEGER
+	// 找出数组中最小长度的字符串
 	for (let str of strs) {
 		minLength = Math.min(minLength, str.length);
 	}
 
-
-	/* index之前是否是公共前缀  比方说strs = ["flower", "flow", "flight"] index=2，就是查看前2位 fl是否是公共前缀，结果返回true */
-	const isCommonPrefix = (index) => {
-		let str0 = strs[0].substring(0, index);
-		let n = strs.length;
-		for (let i = 1; i < n; i++) {
-			// 判断每个字符串的长度为 index 的前缀是否相同
-			let str = strs[i];
-			if (str0 != str.substring(0, index)) return false;
+	// 查看传入的middle索引截取的字符串是否跟第一项后的 每一项截取middle索引后的值匹配
+	const middleIsMatch = (middle) => {
+		let takeMiddleString = strs[0].substring(0, middle)
+		for (let i = 1; i < strs.length; i++) {
+			let contrastStr = strs[i].substring(0, middle)
+			if (takeMiddleString != contrastStr) return false
 		}
-		return true;
-	};
-	['aaaa','aaaaa','aaaaa','aaaaaaaa']
-
-	// 左闭右开区间
-	let low = 0,
-		high = minLength;
-	while (low < high) {
-		// 为什么这里要用(high - low + 1)呢，+1是为了能够选择到需要的字符上 比如第一轮mid为2且字符串匹配，最小长度为4，下一轮需要的字符串就为3，
-		let mid = low + ((high - low + 1) / 2);
-		// 如果在前半段里面有公共前缀的话，再往后查找是否有符合条件的，因为我们现在要求的是最长公共前缀
-		if (isCommonPrefix(mid)) low = mid;
-		// 如果前半段不是公共前缀那我们就再缩小范围再查找，也就是在左半段的左半段里面查
-		else high = mid - 1;
+		return true
 	}
-	return strs[0].substring(0, low);
-	
+
+	let low = 0, high = minLength;
+	while (low < high) {
+		// 取[low,high]区间的中间值, 考虑到是二分思想遍历完需要加上之前的low值, 
+		let mid = low + ((high - low + 1) >> 1)
+		// 如果匹配的话将低位区间替换为mid 接着查看后面的区间。 如果不匹配则要缩短high的区间继续求mid
+		middleIsMatch(mid) ? low = mid : high = mid - 1
+	}
+	return strs[0].substring(0, low)
+
 };
 // @lc code=end
 
