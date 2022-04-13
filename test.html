@@ -48,25 +48,21 @@
 		return dp[amount] === Infinity ? -1 : dp[amount]
 	}
 	coinChange([1,2,5],11) */
-
-	const lengthOfLIS = function (nums) {
-	if (nums.length === 0) {
-		return 0
-	}
-
-	let dp = Array(nums.length).fill(1)
-	debugger
-	for (let i = 0; i < nums.length; i++) {
-		for (let j = 0; j <= i; j++) {
-			if (nums[i] > nums[j]) {
-				dp[i] = Math.max(dp[j+1], dp[i])
+	var longestCommonPrefix = function (strs) {
+		if(strs.length === 0) {
+			return ''
+		}
+		let str = strs[0]
+		for(let i = 1; i < strs.length; i++) {
+			for(let j = 0; j < strs[i].length; j++) {
+				if(str[j] !== strs[i][j]) {
+					str = str.slice(0, j)
+				}
 			}
 		}
-	}
-	return Math.max(...dp)
+	};
 
-};
-	console.log(lengthOfLIS([1,3,6,7,9,4,10,5,6]))
+	longestCommonPrefix(["flower","flow","flight"])
     </script>
   </body>
 </html>
