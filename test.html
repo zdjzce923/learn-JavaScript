@@ -48,19 +48,22 @@
 		return dp[amount] === Infinity ? -1 : dp[amount]
 	}
 	coinChange([1,2,5],11) */
-	var removeElement = function(nums, val) {
-		for(let i = 0; i < nums.length; i++) {
-			console.log('i---from:', i)
-			if(nums[i] === val) {
-				nums.splice(i, 1)
-				i--
-				console.log('i----to:', i)
+	var moveZeroes = function (nums) {
+		let n = nums.length, left = 0, right = 0;
+		while (right < n) {
+			if (nums[right] != 0) {
+				temp = nums[left];
+				nums[left] = nums[right];
+				nums[right] = temp;
+				left++;
 			}
+			right++;
 		}
-		console.log('nums:', nums)
-		return nums.length
-	};
-	removeElement([1,2,2,2,2,5], 2)
+		return nums
+	}
+
+	console.log(moveZeroes([1,0,0,3,12]))
+	// [0,1,0,3,12]
     </script>
   </body>
 </html>
