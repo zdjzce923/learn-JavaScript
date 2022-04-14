@@ -48,6 +48,19 @@
 		return dp[amount] === Infinity ? -1 : dp[amount]
 	}
 	coinChange([1,2,5],11) */
+	var removeElement = function(nums, val) {
+		for(let i = 0; i < nums.length; i++) {
+			console.log('i---from:', i)
+			if(nums[i] === val) {
+				nums.splice(i, 1)
+				i--
+				console.log('i----to:', i)
+			}
+		}
+		console.log('nums:', nums)
+		return nums.length
+	};
+	removeElement([1,2,2,2,2,5], 2)
     </script>
   </body>
 </html>
