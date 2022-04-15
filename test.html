@@ -48,21 +48,16 @@
 		return dp[amount] === Infinity ? -1 : dp[amount]
 	}
 	coinChange([1,2,5],11) */
-	var moveZeroes = function (nums) {
-		let n = nums.length, left = 0, right = 0;
-		while (right < n) {
-			if (nums[right] != 0) {
-				temp = nums[left];
-				nums[left] = nums[right];
-				nums[right] = temp;
-				left++;
-			}
-			right++;
-		}
-		return nums
-	}
-
-	console.log(moveZeroes([1,0,0,3,12]))
+    // 思路 双指针 将第一个数存起来作为基准值 接下来找这个基准值 找到了就将原来的基准值到找到的值的数量截取下来 进行对比
+	var fractionToDecimal = function(numerator, denominator) {
+        const divisionResult = String(numerator / denominator)
+        if (divisionResult.includes('.')) {
+            const cutOutNum = divisionResult.slice(divisionResult.indexOf('.') + 1)
+            console.log('divisionResult:', divisionResult)
+            let left = 0, right = 0
+        }
+    };
+    fractionToDecimal(4,333)
 	// [0,1,0,3,12]
     </script>
   </body>
