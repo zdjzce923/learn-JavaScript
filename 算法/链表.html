@@ -1,57 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
-<body>
-	<script>
-		class Node {
-			constructor(val) {
-				this.val = val
-				this.next = null
-			}
-		}
-		class NodeList {
-			constructor() {
-				this.head = null
-			}
-			append(val) {
-				const node = new Node(val)
-				let p = this.head
-				if(this.head) {
-					while(p.next) {
-						p = p.next
-					}
-					p.next = node
-				} else {
-					this.head = node
-				}
-			}
-			print() {
-				let p = this.head
-				let ret = ''
-				if(this.head) {
-					do {
-						ret += (p.val + '=>')
-						p = p.next
-					} while(p.next)
-					ret += p.val
-					console.log(ret)
-				} else {
-					console.log('empty')
-				}
-			}
-		}
 
-		const list = new NodeList()
-		list.append(1)
-		list.append(2)
-		list.append(3)
-		list.append(4)
-		list.print()
-	</script>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Node {
+      constructor(val) {
+        this.val = val
+        this.next = null
+      }
+    }
+    class NodeList {
+      constructor() {
+        this.head = null
+      }
+      append (val) {
+        const node = new Node(val)
+        let p = this.head
+        if (this.head) {
+          while (p.next) {
+            p = p.next
+          }
+          p.next = node
+        } else {
+          this.head = node
+        }
+      }
+      print () {
+        let p = this.head
+        let ret = ''
+        if (this.head) {
+          do {
+            ret += (p.val + '=>')
+            p = p.next
+          } while (p.next)
+          ret += p.val
+          console.log(ret)
+        } else {
+          console.log('empty')
+        }
+      }
+    }
+
+    const list = new NodeList()
+    list.append(1)
+    list.append(2)
+    list.append(3)
+    list.append(4)
+    list.print()
+  </script>
 </body>
+
 </html>
