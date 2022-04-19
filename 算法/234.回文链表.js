@@ -41,7 +41,7 @@
 /**
  * 方法2 递归到尾结点后与头结点进行对比 如果不等则return false 等于则将头节点换成next
  */
-let frontPointer
+/* let frontPointer
 
 const contrastNode = (curNode) => {
   if (curNode !== null) {
@@ -55,15 +55,47 @@ const contrastNode = (curNode) => {
 const isPalindrome = function (head) {
   frontPointer = head
   return contrastNode(frontPointer, head.next)
-}
+} */
 
 /**
- * 方法3 双指针 右指针始终比左指针多移一位 右指针到最后的时候左指针正好在中间位置
+ * 方法3 双指针 
+ * 链表的中间节点 + 反转链表
  * 将左指针节点链表反转 再进行对比
  */
-/* var isPalindrome = function (head) {
+var isPalindrome = function (head) {
+  let slow = fast = head
+  while (fast && fast.next) {
+    fast = fast.next.next
+    slow = slow.next
+  }
+  // 考虑到偶数链表 例如1 -> 2 -> 2 -> 1 的中间节点为倒数第二个2 需要带上slow节点本身
+  // 奇数链表 例如  1 -> 2 -> 1  的中间节点为2 截取后的链表为 1   1  不需要带上slow节点
+  // 判断是否是偶数链表 遍历完的fast是null 因为去除掉头结点剩下的节点就是奇数 到最后自然是null
+  const isOddNumber = fast != null
+  const secondStart = isOddNumber ? slow.next : slow
+  let node1 = reverseNodeList(head, slow)
+  let node2 = secondStart
 
+  while (node1) {
+    if (node1.val != node2.val) {
+      return false
+    }
+    node1 = node1.next
+    node2 = node2.next
+  }
+  return true
 }
- */
+
+const reverseNodeList = (head_node, pivot_node) => {
+  let cache = null, cur = head_node
+  while (cur != pivot_node) {
+    let next = cur.next
+    cur.next = cache
+    cache = cur
+    cur = next
+  }
+  return cache
+}
+
 // @lc code=end
 
