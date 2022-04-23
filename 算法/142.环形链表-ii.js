@@ -16,7 +16,10 @@
 /**
  * @param {ListNode} head
  * @return {ListNode}
+ * 3 -> 2 -> 1 -> 4 
+ *      ↑---------|
  */
+
 var detectCycle = function(head) {
     
 };
