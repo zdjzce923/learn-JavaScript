@@ -18,10 +18,7 @@
  * @return {number[]}
  */
 
-/**
- * 二叉树的前序遍历 循环 栈解法 
- * 前序遍历遵照 根节点 左节点 右节点的遍历方式 将根节点放入栈中 接着将节点弹出栈 后续遍历左右节点
- */
+
 /* const preorderTraversal = function (root) {
   const arr = []
 
@@ -36,6 +33,11 @@
   leftTraverse(root)
   return arr
 }; */
+
+/**
+ * 二叉树的前序遍历 循环 栈解法 
+ * 前序遍历遵照 根节点 左节点 右节点的遍历方式 将根节点放入栈中 接着将节点弹出栈 后续遍历左右节点
+ */
 const preorderTraversal = function (root) {
   if (root === null) {
     return []

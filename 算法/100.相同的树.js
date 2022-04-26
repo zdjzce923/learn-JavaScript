@@ -22,6 +22,17 @@
 /**
  * 递归 一直遍历到两棵树的最后一个节点再进行对比
  */
+/* var isSameTree = function (p, q) {
+  if (p === null && q === null) { return true }
+  if (p === null || q === null) { return false }
+  if (p.val !== q.val) { return false }
+
+  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right)
+};
+ */
+/**
+ * 递归 一直遍历到两棵树的最后一个节点再进行对比
+ */
 var isSameTree = function (p, q) {
   if (p === null && q === null) { return true }
   if (p === null || q === null) { return false }
