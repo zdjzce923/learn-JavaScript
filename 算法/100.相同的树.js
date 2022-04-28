@@ -37,7 +37,8 @@
  */
 
 /**
- * 
+ * 用两个栈 先放进去root 开始循环后每次都弹出一个进行对比 再把左右节点都放到数组里
+ * 下次进来接着对比
  */
 var isSameTree = function (p, q) {
   if (p === null && q === null) return true
