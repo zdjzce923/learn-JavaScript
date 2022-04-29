@@ -24,9 +24,9 @@
  */
 
 /**
- * 将二叉树进行前序遍历 接着循环把left都弄为null 换到right去
+ * 方法1 前序递归。将二叉树进行前序遍历 接着循环把left都弄为null 换到right去
  */
-const flatten = function (root) {
+/* const flatten = function (root) {
   let list = []
   preOrderTraverse(root, list)
   // 将节点放入list后开始移动left节点
@@ -45,6 +45,48 @@ function preOrderTraverse (node, list) {
     preOrderTraverse(node.left, list)
     preOrderTraverse(node.right, list)
   }
+} */
+
+/**
+ * 方法2
+ * 循环前序遍历的过程中更改节点
+ */
+const flatten = function (root) {
+  if (root === null) { return }
+  let nodeStack = [root]
+  let prev = null
+  while (nodeStack.length > 0) {
+    const node = nodeStack.pop()
+    if (prev !== null) {
+      prev.left = null
+      prev.right = node
+    }
+    if (node.right !== null) {
+      nodeStack.push(node.right)
+    }
+    if (node.left !== null) {
+      nodeStack.push(node.left)
+    }
+    prev = node
+  }
 }
+
+
+/**
+ * 方法3
+ * 递归
+ */
+/* const flatten = function (root) {
+  if (root === null) return
+  flatten(root.left)
+  let right = root.right
+  root.right = root.left
+  root.left = null
+  while (root.right !== null) {  // 不理解
+    root = root.right
+  }
+  flatten(right)
+  root.right = right
+} */
 // @lc code=end
 
