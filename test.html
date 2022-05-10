@@ -49,22 +49,76 @@
 	}
 	coinChange([1,2,5],11) */
   // 思路 双指针 将第一个数存起来作为基准值 接下来找这个基准值 找到了就将原来的基准值到找到的值的数量截取下来 进行对比
+  function BinarySearchTree(keys){
 
-const removeDuplicates = function (nums) {
-  if (nums.length === 0) return []
-  let fast = 0
-  let slow = 0
-  while (fast < nums.length) {
-    if (nums[fast] != nums[slow]) {
-      slow++
-      nums[slow] = nums[fast]
+  //Node构造函数
+    let Node = function (key){
+        this.key = key
+        this.left = null
+        this.right = null
     }
-    fast++
-  }
-  return slow + 1
+    let root = null
+    let insertNode = (node,newNode)=>{
+        if(newNode.key < node.key){
+        if(node.left === null){
+            node.left = newNode
+        }else {
+            insertNode(node.left,newNode)
+        }
+        }else {
+        if (node.right === null) {
+            node.right = newNode
+        }else {
+            insertNode(node.right,newNode)
+        }
+        }
+    }
+    this.insert = (key)=>{
+        let newNode = new Node(key)
+        if (root === null) {
+        root = newNode
+        }else {
+        insertNode(root,newNode)
+        }
+    }
+    keys.forEach((key)=>{
+    this.insert(key)
+    })
+    return root
 }
-    console.log(removeDuplicates([5,5,5,1,1,1,2,2,2]))
-	// [0,1,0,3,12]
+const keys = [1,2,2,3,null,null,3,4,null,null,4]
+const root = BinarySearchTree(keys)
+
+
+var isBalanced = function (root) {
+    debugger
+    if (root === null) { return true }
+    if (root.left === null && root.right === null) return true
+    let leftStack = [root.left]
+    let rightStack = [root.right]
+    let leftCount = root.left ? getTreeLength(leftStack) : 0
+    let rightCount = root.right ? getTreeLength(rightStack) : 0
+
+    function getTreeLength(stack) {
+        let count = 1
+        while (stack.length) {
+            let node = stack.pop()
+            if (node === null) { return }
+            node.left && stack.push(node.left)
+            node.right && stack.push(node.right)
+            if (node.left || node.right) {
+                count++
+            }
+        }
+        return count
+    }
+    if ((leftCount - rightCount) > 1) return false
+    if ((rightCount - leftCount) > 1) return false
+    return true
+};
+
+console.log(root)
+console.log(isBalanced(root))
     </script>
   </body>
 </html>
