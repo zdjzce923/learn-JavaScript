@@ -19,9 +19,10 @@
  * @param {Node} root
  * @return {Node}
  */
+// 方法1 使用队列
 // 使用队列 保存每层节点并进行遍历 如果当前的 i 为最后一个 则next为null
 // 否则next 为当前队列的第一个node
-var connect = function (root) {
+/* var connect = function (root) {
     if (root === null) { return root }
     let stack = [root]
     while (stack.length) {
@@ -38,9 +39,31 @@ var connect = function (root) {
                 node.next = stack[0]
             }
         }
-        // result.push(nodeNext)
     }
     return root
-};
+}; */
+
+
+// 方法2 使用递归
+
+var connect = function (root) {
+    if (root === null) { return root }
+    curveTierNode(root)
+    return root
+}
+
+function curveTierNode (node) {
+    if (node === null) { return }
+    let left = node.left
+    let right = node.right
+    while (left !== null) {
+        left.next = right
+        left = left.right
+        right = right.left
+    }
+    curveTierNode(node.left)
+    curveTierNode(node.right)
+}
+
 // @lc code=end
 
