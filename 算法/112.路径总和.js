@@ -20,7 +20,7 @@
  */
 
 // 深度优先
-var hasPathSum = function (root, targetSum) {
+/* var hasPathSum = function (root, targetSum) {
     if (root == null) {
         return false;
     }
@@ -28,7 +28,30 @@ var hasPathSum = function (root, targetSum) {
         return targetSum == root.val;
     }
     return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
-}
+} */
 
+// 广度优先 用一个队列保存节点 一个队列保存累加值
+var hasPathSum = function (root, targetSum) {
+    if (root === null) return false
+    let nodeQue = [root]
+    let valQue = [root.val]
+    while (nodeQue.length) {
+        let len = nodeQue.length
+        for (let i = 0; i < len; i++) {
+            let node = nodeQue.shift()
+            let val = valQue.shift()
+            if (val === targetSum && node.left === null && node.right === null) return true
+            if (node.left) {
+                nodeQue.push(node.left)
+                valQue.push(node.left.val + val)
+            }
+            if (node.right) {
+                nodeQue.push(node.right)
+                valQue.push(node.right.val + val)
+            }
+        }
+    }
+    return false
+}
 // @lc code=end
 
