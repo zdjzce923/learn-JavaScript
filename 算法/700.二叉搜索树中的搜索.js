@@ -19,7 +19,7 @@
  * @return {TreeNode}
  */
 // 继续用捞比方法直接怼栈 或者递归就完了
-var searchBST = function (root, val) {
+/* var searchBST = function (root, val) {
   const stack = [root]
   let findNode = null
   while (stack.length) {
@@ -29,6 +29,13 @@ var searchBST = function (root, val) {
     node.right && stack.push(node.right)
   }
   return findNode
+
+}; */
+
+var searchBST = function (root, val) {
+  if (root === null) return null
+  if (root.val === val) return root
+  return root.val > val ? searchBST(root.left, val) : searchBST(root.right, val)
 
 };
 // @lc code=end
