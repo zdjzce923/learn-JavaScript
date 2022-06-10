@@ -22,17 +22,14 @@ var sortedArrayToBST = function (nums) {
   return dfsToBST(nums, 0, nums.length - 1)
 };
 const dfsToBST = (nums, left, right) => {
-  if (left > right) {
-    return null
-  }
+  if (left > right) return null
+  const mid = Math.floor((left + right) / 2)
 
-  let middleNum = Math.floor((left + right) / 2)
-  const node = new TreeNode(nums[middleNum])
+  const root = new TreeNode(nums[mid])
+  root.left = dfsToBST(nums, left, mid - 1)
+  root.right = dfsToBST(nums, mid + 1, right)
 
-  node.left = dfsToBST(nums, left, middleNum - 1)
-  node.right = dfsToBST(nums, middleNum + 1, right)
-
-  return node
+  return root
 }
 // @lc code=end
 

@@ -25,8 +25,23 @@
  * @return {TreeNode}
  */
 // -10 -> -3 -> 0 -> 5 -> 9
-var sortedListToBST = function(head) {
-
+// 快慢双指针 跟数组的思路其实很像 就是找到中点 再进行递归
+var sortedListToBST = function (head) {
+  if (head === null) return null
+  return toBST(head, null)
 };
+const toBST = (head, tail) => {
+  if (head === tail) return null
+  let fast = head
+  let slow = head
+  while (fast !== tail && fast.next !== tail) {
+    fast = fast.next.next
+    slow = slow.next
+  }
+  const root = new TreeNode(slow.val)
+  root.left = toBST(head, slow)
+  root.right = toBST(slow.next, tail)
+  return root
+}
 // @lc code=end
 
