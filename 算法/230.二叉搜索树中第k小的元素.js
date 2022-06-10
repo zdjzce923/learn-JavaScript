@@ -18,8 +18,19 @@
  * @param {number} k
  * @return {number}
  */
-var kthSmallest = function(root, k) {
-
+// 找出二叉搜索树的第 k 小的元素 最简单的做法就是遍历完节点在排个序？
+// 捞比方法 只要遍历了把值都塞进去就可以拿到指定值 应该要在遍历的时候直接拿到对应小的值
+var kthSmallest = function (root, k) {
+  const stack = [root]
+  const nodeValArr = []
+  while (stack.length) {
+    const node = stack.pop()
+    nodeValArr.push(node.val)
+    node.left && stack.push(node.left)
+    node.right && stack.push(node.right)
+  }
+  nodeValArr.sort((a, b) => a - b)
+  return nodeValArr[k - 1]
 };
 // @lc code=end
 
