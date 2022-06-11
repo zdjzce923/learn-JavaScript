@@ -18,7 +18,7 @@
  * @param {number} val
  * @return {TreeNode}
  */
-// 不知道怎么做
+// 根据中序遍历的规则 判断要找的节点是大于还是小于当前节点 如果小 则放左边 大 则放右边  如果左或右已经右节点 那么接着让节点等于left 或者right
 var insertIntoBST = function (root, val) {
   if (root === null) { return new TreeNode(val) }
   let pre = root
