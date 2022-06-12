@@ -49,7 +49,7 @@
 	}
 	coinChange([1,2,5],11) */
   // 思路 双指针 将第一个数存起来作为基准值 接下来找这个基准值 找到了就将原来的基准值到找到的值的数量截取下来 进行对比
-  function BinarySearchTree(keys){
+/*   function BinarySearchTree(keys){
 
   //Node构造函数
     let Node = function (key){
@@ -115,10 +115,27 @@ var isBalanced = function (root) {
     if ((leftCount - rightCount) > 1) return false
     if ((rightCount - leftCount) > 1) return false
     return true
+}; */
+var evalRPN = function (tokens) {
+  const stack = []
+  for (let numOrOperator of tokens) {
+    if (isNaN(numOrOperator)) {
+      const num1 = stack.pop()
+      const num2 = stack.pop()
+      numOrOperator == '/' ? 
+      // -5--2 会提示运算符error 需要用空格隔开 使用 eval 直接计算拼接后的数字跟运算符
+      stack.push(parseInt(eval(num2 + numOrOperator + ' ' + num1))) :     
+      stack.push(eval(num1 + numOrOperator + num2))
+    } else {
+      stack.push(numOrOperator)
+    }
+  }
+  return stack[0]
 };
 
-console.log(root)
-console.log(isBalanced(root))
+console.log(evalRPN(["4","-2","/","2","-3","-","-"]
+))
+console.log(-5 - -2)
     </script>
   </body>
 </html>
