@@ -9,8 +9,16 @@
  * @param {string} s
  * @return {string}
  */
-var removeDuplicates = function(s) {
-
+var removeDuplicates = function (s) {
+  const stack = []
+  for (let letter of s) {
+    if (stack[stack.length - 1] === letter) {
+      stack.pop()
+    } else {
+      stack.push(letter)
+    }
+  }
+  return stack.join('')
 };
 // @lc code=end
 

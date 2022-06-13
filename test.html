@@ -116,7 +116,7 @@ var isBalanced = function (root) {
     if ((rightCount - leftCount) > 1) return false
     return true
 }; */
-var evalRPN = function (tokens) {
+/* var evalRPN = function (tokens) {
   const stack = []
   for (let numOrOperator of tokens) {
     if (isNaN(numOrOperator)) {
@@ -135,7 +135,23 @@ var evalRPN = function (tokens) {
 
 console.log(evalRPN(["4","-2","/","2","-3","-","-"]
 ))
-console.log(-5 - -2)
+console.log(-5 - -2) */
+
+var reverseWords = function (s) {
+  let result = ''
+  const stack = s.trim().split(' ').reverse()
+  for (let word of stack) {
+    if (!word) continue
+    if (!result) {
+      result += word
+    } else {
+      result += ' ' + word
+    }
+
+  }
+  return result
+};
+console.log(reverseWords('a good   example'))
     </script>
   </body>
 </html>
