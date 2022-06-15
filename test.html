@@ -8,150 +8,28 @@
     <style></style>
   </head>
   <body>
+    <!-- <iframe src="https://robot-lib-achieve.zuoshouyisheng.com/?app_id=5cde25e89ea2ea76d3529ae8" frameborder="0" style="height:100vh;width:100vw;"></iframe> -->
     <script>
-      /* const array = [435,687,1,57,9,325,79,4543,523,544,1234,5832,1235,743]
-      function quickSort(array) {
-        if(array.length <= 1) {
-          return array
+      /* window.addEventListener('message',(e)=> {
+        console.log('eeeee---message',e)
+      }) */
+
+
+    var findMin = function (nums) {
+      debugger
+      let left = 0, right = nums.length - 1
+      while (left < right) {
+        let pivot = left + Math.floor((right - left) / 2)
+        if (nums[pivot] < nums[right]) {
+          right = pivot
+        } else {
+          left = pivot + 1
         }
-        const pivotIndex = Math.floor(array.length / 2)
-        const pivot = array.splice(pivotIndex, 1)[0]
-        let left = []
-        let right = []
-        for(let i = 0; i < array.length; i++) {
-          if(array[i] > pivot){
-            right.push(array[i])
-          } else {
-            left.push(array[i])
-          }
-        }
-        return quickSort(left).concat([pivot], quickSort(right))
       }
-      console.log(quickSort(array)) */
-	  /* const coinChange = (coins, amount) => {
-		if (!amount) {
-			return 0
-		}
+      return nums[left]
+    };
 
-		let dp = Array(amount + 1).fill(Infinity)
-		dp[0] = 0
-
-		for (let i = 0; i < coins.length; i++) {
-			console.log('coins_now-----:', i)
-			for (let j = coins[i]; j <= amount; j++) {
-				console.log('dp[j - coins[i]]-----:', dp[j - coins[i]])
-				dp[j] = Math.min(dp[j - coins[i]] + 1, dp[j])
-				console.log('dp[j]:', dp[j])
-			}
-		}
-
-		return dp[amount] === Infinity ? -1 : dp[amount]
-	}
-	coinChange([1,2,5],11) */
-  // 思路 双指针 将第一个数存起来作为基准值 接下来找这个基准值 找到了就将原来的基准值到找到的值的数量截取下来 进行对比
-/*   function BinarySearchTree(keys){
-
-  //Node构造函数
-    let Node = function (key){
-        this.key = key
-        this.left = null
-        this.right = null
-    }
-    let root = null
-    let insertNode = (node,newNode)=>{
-        if(newNode.key < node.key){
-        if(node.left === null){
-            node.left = newNode
-        }else {
-            insertNode(node.left,newNode)
-        }
-        }else {
-        if (node.right === null) {
-            node.right = newNode
-        }else {
-            insertNode(node.right,newNode)
-        }
-        }
-    }
-    this.insert = (key)=>{
-        let newNode = new Node(key)
-        if (root === null) {
-        root = newNode
-        }else {
-        insertNode(root,newNode)
-        }
-    }
-    keys.forEach((key)=>{
-    this.insert(key)
-    })
-    return root
-}
-const keys = [1,2,2,3,null,null,3,4,null,null,4]
-const root = BinarySearchTree(keys)
-
-
-var isBalanced = function (root) {
-    debugger
-    if (root === null) { return true }
-    if (root.left === null && root.right === null) return true
-    let leftStack = [root.left]
-    let rightStack = [root.right]
-    let leftCount = root.left ? getTreeLength(leftStack) : 0
-    let rightCount = root.right ? getTreeLength(rightStack) : 0
-
-    function getTreeLength(stack) {
-        let count = 1
-        while (stack.length) {
-            let node = stack.pop()
-            if (node === null) { return }
-            node.left && stack.push(node.left)
-            node.right && stack.push(node.right)
-            if (node.left || node.right) {
-                count++
-            }
-        }
-        return count
-    }
-    if ((leftCount - rightCount) > 1) return false
-    if ((rightCount - leftCount) > 1) return false
-    return true
-}; */
-/* var evalRPN = function (tokens) {
-  const stack = []
-  for (let numOrOperator of tokens) {
-    if (isNaN(numOrOperator)) {
-      const num1 = stack.pop()
-      const num2 = stack.pop()
-      numOrOperator == '/' ? 
-      // -5--2 会提示运算符error 需要用空格隔开 使用 eval 直接计算拼接后的数字跟运算符
-      stack.push(parseInt(eval(num2 + numOrOperator + ' ' + num1))) :     
-      stack.push(eval(num1 + numOrOperator + num2))
-    } else {
-      stack.push(numOrOperator)
-    }
-  }
-  return stack[0]
-};
-
-console.log(evalRPN(["4","-2","/","2","-3","-","-"]
-))
-console.log(-5 - -2) */
-
-var reverseWords = function (s) {
-  let result = ''
-  const stack = s.trim().split(' ').reverse()
-  for (let word of stack) {
-    if (!word) continue
-    if (!result) {
-      result += word
-    } else {
-      result += ' ' + word
-    }
-
-  }
-  return result
-};
-console.log(reverseWords('a good   example'))
+    findMin([5,6,7,1,2,3])
     </script>
   </body>
 </html>

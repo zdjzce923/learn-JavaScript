@@ -16,24 +16,25 @@
  * 遍历数组 把nums[i]当做是截取长度的最后一位 再去跟前面的每一个数字进行对比 比前面的某个值大则长度+1
  */
 const lengthOfLIS = function (nums) {
-	if (nums.length === 0) {
-		return 0
-	}
+  if (nums.length === 0) {
+    return 0
+  }
 
-	let dp = [1]
-	let maxLen = 1
+  let dp = [1]
+  let maxLen = 1
 
-	for(let i = 1; i < nums.length; i++) {
-		dp[i] = 1
-		for( let j = 0; j < i; j++) {
-			if( nums[i] > nums[j]) {
-				dp[i] = Math.max(dp[j] + 1, dp[i])
-			}
-		}
-		maxLen = Math.max(maxLen, dp[i])
-	}
+  for (let i = 1; i < nums.length; i++) {
+    dp[i] = 1
+    for (let j = 0; j < i; j++) {
+      if (nums[i] > nums[j]) {
+        dp[i] = Math.max(dp[j] + 1, dp[i])
+      }
+    }
+    maxLen = Math.max(maxLen, dp[i])
+  }
 
-	return maxLen
+  return maxLen
 };
+
 // @lc code=end
 
