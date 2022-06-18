@@ -25,33 +25,31 @@
  */
 
 // 如果数组里头的数字加起来大于 target 就弹出一个数字
+//  j = 0  j < 4   num = 2   path = [2]  sum = 2
+//  j = 0  j < 4   num = 2  path = [2,2] sum = 4
+//  j = 0  j < 4   num = 2  path = [2,2,2] sum = 6
+//  j = 0  j < 4   num = 2  continue 
+//  pop()   path = [2, 2]  sum = 4
 var combinationSum = function (candidates, target) {
   const res = []
   const path = []
-  candidates.sort()
   backTrack(0, 0)
+
   return res
 
-  // 上来就是一个 backTrack
   function backTrack (i, sum) {
-    // 终止条件
-    if (sum > target) {
-      return
-    }
-    if (sum === target) {
-      res.push([...path])
-    }
-    // 循环
+    if (sum > target) return
+
+    if (sum === target) res.push([...path])
+
     for (let j = i; j < candidates.length; j++) {
-      const num = candidates[j];
-      if (num + sum > target) continue
-      
+      const num = candidates[j]
+      if (sum + num > target) continue
       path.push(num)
       sum += num
       backTrack(j, sum)
       path.pop()
       sum -= num
-
     }
   }
 };

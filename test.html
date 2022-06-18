@@ -13,23 +13,6 @@
       /* window.addEventListener('message',(e)=> {
         console.log('eeeee---message',e)
       }) */
-
-
-    var findMin = function (nums) {
-      debugger
-      let left = 0, right = nums.length - 1
-      while (left < right) {
-        let pivot = left + Math.floor((right - left) / 2)
-        if (nums[pivot] < nums[right]) {
-          right = pivot
-        } else {
-          left = pivot + 1
-        }
-      }
-      return nums[left]
-    };
-
-    findMin([5,6,7,1,2,3])
     </script>
   </body>
 </html>
