@@ -10,16 +10,36 @@
 const koa = require('koa')
 const Router = require('koa-router')
 const Body = require('koa-body')
+const static = require('koa-static')
+const path = require('path')
+const cors = require('koa2-cors')
+const multer = require('@koa/multer')
 
 const app = new koa()
 const router = new Router()
 
-router.get('/', async (ctx) => {
-  ctx.type = 'html'
-  ctx.body = '<h1>hello world</h1>'
-})
+app.use(cors()).use(router.routes()).use(router.allowedMethods()).use(Body())
+app.use(static(
+  path.join(__dirname, '../upload')  // 配置静态文件目录（上传路径）
+))
 
-app.use(router.routes()).use(router.allowedMethods()).use(Body())
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../upload')
+  },
+  filename: function (req, file, cb) {
+    const fileFormat = (file.originalname).split('.')
+    cb(null, Date.now() + '.' + fileFormat[fileFormat.length - 1])
+  }
+})
+const upload = multer(storage)
+
+router.post('/upload', upload.single('file'), async (ctx) => {
+  console.log('ctx.request.body', ctx.request.body)
+  ctx.body = {
+    data: ctx.request.body
+  }
+})
 
 app.listen(3000, () => {
   console.log('listen 3000')

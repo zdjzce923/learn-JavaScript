@@ -26,7 +26,7 @@ app.use(async (ctx, next) => {
   ctx.cookies.set('name', 'tobi', { signed: true }) // 倒换秘钥
 }).use(async ctx => {
   ctx.body = 'Hello World'
-})  //链式调用
+})  // 链式调用
 
 
 

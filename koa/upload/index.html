@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" class="file">
+  <button onclick="uploadFile()">上传</button>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+  <script>
+    let formData = new FormData()
+    document.querySelector(".file").addEventListener('change', (e) => {
+      let files = e.target.files
+      if (!files.length) return
+      formData.append('file', files[0], files[0].name)
+      console.log('formData:', formData)
+    })
+    
+    function uploadFile() {
+      axios.post('http://localhost:3000/upload', formData, {
+        Headers: {
+          "Content-type": "multipart/form-data"
+        }
+      })
+    }
+  </script>
+</body>
+</html>
