@@ -24,18 +24,40 @@
  * [".",".",".",".","8",".",".","7","9"]
  * ]
  */
-// 以行为单位
+// 以行为单位 直接遍历到单个数字
 var solveSudoku = function (board) {
-  let boardSubstitute = []
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      for (let k = 0; k < j; k++) {
-
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (board[i][j] != '.') continue
+      for (let k = 1; k <= 9; k++) {
+        //  判断能不能放
+        if (isValid(board, i, j, k)) {
+          board[i][j] = k
+          if (solveSudoku(board)) return true
+          board[i][j] = '.'
+        }
       }
+      return false
+    }
+  }
+  return true
+}
+// @lc code=end
+
+function isValid (board, row, col, k) {
+  // 查看一行一列上有无相同的值
+  for (let i = 0; i < 9; i++) {
+    if (board[row][i] === k || board[i][col] === k) return false
+  }
+
+  // 查看九宫格有无相同的值
+  let x = Math.floor(row / 3) * 3
+  let y = Math.floor(col / 3) * 3
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      if (board[x + i][y + j] === k) return false
     }
   }
 
+  return true
 }
-
-// @lc code=end
-
