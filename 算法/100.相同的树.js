@@ -22,25 +22,20 @@
 /**
  * 递归 一直遍历到两棵树的最后一个节点再进行对比
  */
-/* var isSameTree = function (p, q) {
+var isSameTree = function (p, q) {
   if (p === null && q === null) { return true }
   if (p === null || q === null) { return false }
   if (p.val !== q.val) { return false }
 
   return isSameTree(p.left, q.left) && isSameTree(p.right, q.right)
 };
- */
 
-/**
- * 循环 直接把一棵树的值全丢到栈(应该是队列)里 接着在遍历另一棵树的时候直接比已经有的值
- * 考虑到循环两棵树获取终值时间复杂度过高 最好是 O(n) O(mn)
- */
 
 /**
  * 用两个栈 先放进去root 开始循环后每次都弹出一个进行对比 再把左右节点都放到数组里
  * 下次进来接着对比
  */
-var isSameTree = function (p, q) {
+/* var isSameTree = function (p, q) {
   if (p === null && q === null) return true
   if (p === null || q === null) return false
 
@@ -69,7 +64,7 @@ var isSameTree = function (p, q) {
     }
   };
   return pQueue.length === 0 && qQueue.length === 0
-}
+} */
 // [1,2,1]
 // [1,1,2]
 // @lc code=end
